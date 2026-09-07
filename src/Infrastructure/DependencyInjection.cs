@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TeamworkApp.Application.Auth;
 using TeamworkApp.Application.Persistence;
+using TeamworkApp.Domain.Entities;
 using TeamworkApp.Infrastructure.Auth;
 using TeamworkApp.Infrastructure.Persistence;
 
@@ -20,6 +22,8 @@ public static class DependencyInjection
 
         services.Configure<JwtSettings>(configuration.GetSection("Jwt"));
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
