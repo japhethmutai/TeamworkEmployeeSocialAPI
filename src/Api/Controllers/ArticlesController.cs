@@ -2,9 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TeamworkApp.Application.Common;
 using TeamworkApp.Application.Posts;
 using TeamworkApp.Application.Posts.Commands;
 using TeamworkApp.Application.Posts.Queries.GetArticleById;
+using TeamworkApp.Application.Posts.Queries.GetArticles;
 
 namespace TeamworkApp.Api.Controllers;
 
@@ -36,6 +38,20 @@ public class ArticlesController : ControllerBase
     public async Task<ActionResult<ArticleResult>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetArticleByIdQuery(id);
+        var result = await _mediator.Send(query, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<PagedResult<ArticleResult>>> GetArticles(
+        [FromQuery] string? cursor,
+        [FromQuery] int pageSize = 20,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var clampedPageSize = Math.Clamp(pageSize, 1, 50);
+        var query = new GetArticlesQuery(cursor, clampedPageSize);
         var result = await _mediator.Send(query, cancellationToken);
         return Ok(result);
     }
