@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TeamworkApp.Application.Auth;
+using TeamworkApp.Application.Posts;
 
 namespace TeamworkApp.Api.Middleware;
 
@@ -19,6 +20,7 @@ public class GlobalExceptionHandler : IExceptionHandler
         {
             EmailAlreadyInUseException => (StatusCodes.Status409Conflict, "Email Already In Use", exception.Message),
             InvalidCredentialsException => (StatusCodes.Status401Unauthorized, "Invalid Credentials", exception.Message),
+            ArticleNotFoundException => (StatusCodes.Status404NotFound, "Article Not Found", exception.Message),
             _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred", "An unexpected error occurred. Please try again later.")
         };
 
