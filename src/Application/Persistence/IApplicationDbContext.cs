@@ -6,6 +6,7 @@ namespace TeamworkApp.Application.Persistence;
 public interface IApplicationDbContext
 {
     DbSet<User> Users { get; }
+    DbSet<Post> Posts { get;}
     DbSet<Article> Articles { get; }
     DbSet<Gif> Gifs { get; }
     DbSet<Comment> Comments { get; }

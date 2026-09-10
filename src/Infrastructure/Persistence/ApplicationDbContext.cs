@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     }
 
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Post> Posts { get; set; } = null!;
     public DbSet<Article> Articles { get; set; } = null!;
     public DbSet<Gif> Gifs { get; set; } = null!;
     public DbSet<Comment> Comments { get; set; } = null!;
